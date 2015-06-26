@@ -11,13 +11,17 @@ var redditApp = angular.module('reddit', ["ngRoute"])
     controller: 'NewLinkCtrl',
     templateUrl: 'new.html'
   })
+  .when('/edit/:id', {
+    controller: 'EditLinkCtrl',
+    templateUrl: 'edit.html'
+  })
   .when('/show/:id', {
     controller: 'showLinkCtrl',
     templateUrl: 'show.html'
   })
   .otherwise({
     redirectTo: '/'
-  })
+  });
 })
 .service('linkService', function() {
   this.links = [
@@ -32,6 +36,9 @@ var redditApp = angular.module('reddit', ["ngRoute"])
 
   this.deleteLink = function(linkIndex) {
     this.links.splice(linkIndex, 1);
+  };
+  this.saveEdit = function(editLink, linkIndex){
+    this.links.splice(linkIndex, 1, editLink);
   };
 
   this.readLink = function(index) {
